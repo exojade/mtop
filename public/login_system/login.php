@@ -7,12 +7,13 @@
         {
             $row = $rows[0];
 			if (crypt($_POST["password"], $row["userPassword"]) == $row["userPassword"]){
+				// dump($row);
 				$_SESSION["mtop"] = [
 					"userid" => $row["userId"],
 					"uname" => $row["fullName"],
 					"role" => $row["userLevel"],
-					"fullname" => $row["fullname"],
-					// "profile_image" => $row["profile_image"],
+					"fullname" => $row["fullName"],
+					"profile_image" => "",
 					"application" => "mtop"
 				];
 
@@ -30,7 +31,6 @@
     }
     else
     {
-	
         renderview("public/login_system/loginform.php", ["title" => "Log In"]);
     }
 ?>

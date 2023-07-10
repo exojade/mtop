@@ -87,7 +87,6 @@ background-image: url('resources/background-mtop.jpg');
 
    <br>
    <br>
-    <a href="register" class="text-center">Don't have an account? Sign up here.</a>
 
   </div>
   <!-- /.login-box-body -->

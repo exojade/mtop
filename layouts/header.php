@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mariphil Information System</title>
+  <title>MTOP v2</title>
 
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
   <link rel="stylesheet" href="AdminLTE_new/plugins/fontawesome-free/css/all.min.css">
@@ -15,7 +15,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-dark navbar-light" style="background-color: #244D07">
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-light" >
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">

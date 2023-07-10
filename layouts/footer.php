@@ -1,5 +1,6 @@
+<script src="AdminLTE_new/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="AdminLTE_new/dist/js/demo.js"></script>
 <script src="AdminLTE_new/plugins/sweetalert2/sweetalert2.min.js"></script>
-
 <script>
 $('.generic_form_trigger').submit(function(e) {
   e.preventDefault();

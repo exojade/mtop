@@ -4,8 +4,10 @@
     require("includes/checkhit.php");
 	ini_set('max_execution_time', '300');
 		$request = $_SERVER['REQUEST_URI'];
+	
 		$constants = get_defined_constants();
-		$request = explode('/mtop',$request);
+		$request = explode('/mtop_v2',$request);
+		// dump($request);
 		$request = $request[1];
 		$request = explode('?',$request);
 		$request = $request[0];
@@ -21,19 +23,9 @@
 					require 'public/dashboard_system/main.php';
 				else if ($request == 'users')
 					require 'public/users_system/users.php';
-				else if ($request == 'profile')
-					require 'public/profile_system/profile.php';
-				else if ($request == 'scholars')
-					require 'public/scholars_system/scholars.php';
-				else if ($request == 'users')
-					require 'public/users_system/users.php';
-				else if ($request == 'sponsor')
-					require 'public/sponsor_system/sponsor.php';
-				else if ($request == 'email')
-					require 'public/email_system/email.php';
-				else if ($request == 'forms')
-					require 'public/forms_system/forms.php';
-			else if ($request == 'logout'){
+				else if ($request == 'mtop_profile')
+					require 'public/mtop_system/mtop.php';
+				else if ($request == 'logout'){
 				require 'logout.php';
 			}
 				else
