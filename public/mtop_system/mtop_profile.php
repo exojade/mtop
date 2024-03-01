@@ -1,3 +1,12 @@
+<!-- <style ></style> -->
+<link rel="stylesheet" href="AdminLTE_new/plugins/jquery-ui/jquery-ui.min.css">
+<style>
+  .fixed-dialog{
+  position: fixed;
+  top: 50px !important;
+  left: 250px !important;
+}
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -14,7 +23,32 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
-    </section>
+      </section>
+
+
+      <div id="dialog" style="display: none"></div>
+
+
+        <div class="modal fade" id="modal-ordetails">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content ">
+            <div class="modal-header bg-primary">
+              <h4 class="modal-title text-center">Official Receipt Details</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+			          <div class="or-fetched"></div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
     <!-- Main content -->
     <section class="content">
@@ -47,10 +81,23 @@
                   <?php echo($mtop["expiration_date"]); ?>
                 </p>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
               </div>
               <!-- /.card-body -->
             </div>
+
+            <?php if(date("Y-m-d") > $mtop["expiration_date"]): ?>
+              <a href="#" class="btn btn-block btn-primary">RENEW FRANCHISE</a>
+            <?php endif; ?>
+
+            <?php
+            // dump(get_defined_vars());
+            if(date("Y-m-d") > $mtop["mp_expiration_date"]): ?>
+              <a href="#" class="btn btn-block btn-primary">RENEW MAYORS PERMIT</a>
+            <?php endif; ?>
+            <a href="#" class="btn btn-block btn-primary">UNIT SUBSTITUTION</a>
+            <a href="#" class="btn btn-block btn-primary">TRANSFER OF OWNERSHIP</a>
+            <a href="#" class="btn btn-block btn-primary">DROPPING OF MTOP</a>
+            <!-- <a href="#" class="btn btn-block btn-primary">AWARDING OF MTOP</a> -->
            
           </div>
           <!-- /.col -->
@@ -59,9 +106,10 @@
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#profile" data-toggle="tab">Profile</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#new_transaction" data-toggle="tab">New Transaction</a></li>
+                  <!-- <li class="nav-item"><a class="nav-link" href="#new_transaction" data-toggle="tab">New Transaction</a></li> -->
+                  <li class="nav-item"><a class="nav-link" href="#fees" data-toggle="tab">Fees Logs</a></li>
                   <li class="nav-item"><a class="nav-link" href="#transaction" data-toggle="tab">Transaction Logs</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Printable Forms</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#printable" data-toggle="tab">Printable Forms</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -182,149 +230,121 @@
                     <!-- /.post -->
                   </div>
                   <!-- /.tab-pane -->
+
+                  <div class="tab-pane" id="fees">
+                  <?php 
+                    $fees = query("select * from fees
+                                                where MTOP_NO = ?
+                                                order by date_paid DESC", $_GET["mtop"]); 
+                    // dump($transaction_logs);
+                  ?>
+
+                <div class="table-responsive">
+                <table class="table table-bordered text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>OR Number</th>
+                      <th>Amount</th>
+                      <th>ETRACS?</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($fees as $f): 
+                     $or_with_g = $f["or_no"] . "G";
+                     $or_with_dot = $f["or_no"] . ".";
+
+                    //  $f["or_no"] = ltrim($f["or_no"], "0");
+                    //  $f["or_no"] = preg_replace('/[^0-9,.]/', '', $f["or_no"]);
+                      $etracs_amount = query_etracs("SELECT amount, objid FROM cashreceipt WHERE receiptno = ? or receiptno = ? or receiptno = ?", $f["or_no"], $or_with_g, $or_with_dot);
+                      $amount = 0;
+                      $etracs = "NOT FOUND";
+                      if(empty($etracs_amount)):
+                        $amount = (float)$f["filling_fee"] + (float)$f["franchise_fee"] + (float)$f["mayors_permit_fee"] + (float)$f["dropping_fee"] + (float)$f["substitution_fee"] + (float)$f["transfer_fee"] + (float)$f["penalty"];
+                        $or_no = "<a href='#' data-toggle='modal' data-target='#modal-ordetails' data-id='".$f["ID"]."' data-options='mtop' >".$f["or_no"]."</a>";
+                      else:
+                        $amount = $etracs_amount[0]["amount"];
+                        $etracs = "FOUND";
+                        $or_no = "<a href='#' data-toggle='modal' data-target='#modal-ordetails' data-id='".$etracs_amount[0]["objid"]."' data-options='etracs' >".$f["or_no"]."</a>";
+                      endif;
+                      // dump($sql);
+                      ?>
+                      <tr>
+                        <td><?php echo($f["date_paid"]); ?></td>
+                        <td><?php echo($or_no); ?></td>
+                        <td><?php echo($amount); ?></td>
+                        <td><?php echo($etracs); ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+                    </div>
+                  </div>
                   <div class="tab-pane" id="transaction">
-                    <!-- The timeline -->
-                    <div class="timeline timeline-inverse">
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-danger">
-                          10 Feb. 2014
-                        </span>
-                      </div>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-envelope bg-primary"></i>
+                  <?php 
+                    $transaction_logs = query("select * from transaction_logs
+                                                where MTOP_NO = ?
+                                                order by ddate DESC", $_GET["mtop"]); 
+                    // dump($transaction_logs);
+                  ?>
 
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                          <div class="timeline-body">
-                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                            quora plaxo ideeli hulu weebly balihoo...
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-user bg-info"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                          <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-                          </h3>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-comments bg-warning"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                          <div class="timeline-body">
-                            Take me to your leader!
-                            Switzerland is small and neutral!
-                            We are more like Germany, ambitious and misunderstood!
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-success">
-                          3 Jan. 2014
-                        </span>
-                      </div>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-camera bg-purple"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-                          <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                          <div class="timeline-body">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <div>
-                        <i class="far fa-clock bg-gray"></i>
-                      </div>
+<div class="table-responsive">
+<table class="table table-bordered text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($transaction_logs as $logs): 
+                      ?>
+                      <tr>
+                        <td><?php echo($logs["ddate"]); ?></td>
+                        <td><?php echo($logs["type"]); ?></td>
+                        <td><?php echo($logs["action"]); ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
                     </div>
                   </div>
                   <!-- /.tab-pane -->
-
-                  <div class="tab-pane" id="settings">
-                    <form class="form-horizontal">
-                      <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="Name">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Submit</button>
-                        </div>
-                      </div>
-                    </form>
+                  <style>
+                    #printable .col-md-6{
+                      margin-top: 10px;
+                    }
+                  </style>
+                  <div class="tab-pane" id="printable">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <form class="generic_form_pdf" url="mtop_profile">
+                          <input type="hidden" name="action" value="print_renew">
+                          <input type="hidden" name="mtop_no" value="<?php echo($_GET["mtop"]); ?>">
+                          <button type="submit" class="btn btn-primary btn-block">PRINT FOR RENEW FRONT</button>
+                        </form>
+                      </div>  
+                      <div class="col-md-6">
+                      <form class="generic_form_pdf" url="mtop_profile">
+                          <input type="hidden" name="action" value="print_renew_back">
+                          <input type="hidden" name="mtop_no" value="<?php echo($_GET["mtop"]); ?>">
+                          <button type="submit" class="btn btn-primary btn-block">PRINT FOR RENEW BACK</button>
+                        </form>
+                      </div> 
+                      <div class="col-md-6">
+                        <button class="btn btn-primary btn-block">PRINT FOR DROPPING</button>
+                      </div>  
+                      <div class="col-md-6">
+                        <button class="btn btn-primary btn-block">PRINT FOR MAYOR'S PERMIT</button>
+                      </div> 
+                      <div class="col-md-6">
+                        <button class="btn btn-primary btn-block">PRINT FOR SUBSTITUTION</button>
+                      </div>   
+                      <div class="col-md-6">
+                        <button class="btn btn-primary btn-block">PRINT NOTICE</button>
+                      </div>  
+                    </div>
                   </div>
                   <!-- /.tab-pane -->
                 </div>
@@ -357,6 +377,28 @@ $("#cancel_btn_mtop").click(function() {
   $("#mtop_profile :input").prop('readonly', true); //Making all inputs to disabled
   $("#mtop_profile #gender_select").prop('disabled', true); //Making all inputs to disabled
 });
+
+
+$('#modal-ordetails').on('show.bs.modal', function (e) {
+		var id = $(e.relatedTarget).data('id');
+		var options = $(e.relatedTarget).data('options');
+    console.log(options);
+		$.ajax({
+			type : 'post',
+			url : 'mtop_profile', //Here you will fetch records 
+      data: {
+        id: id,
+        options : options,
+        action : "or_details",
+      },
+			// data :  'mtop_id='+ rowid, //Pass $id
+			success : function(data){
+			$('.or-fetched').html(data);//Show fetched data from database
+			}
+		});
+	 });
+
+
   </script>
 
   <?php require("layouts/footer.php") ?>

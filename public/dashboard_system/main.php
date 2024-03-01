@@ -23,6 +23,49 @@
 // endforeach;
 
 
+// PARA SA NEW,RENEW UG AWARDING
+// $fees =  query("select * from fees where filling_fee is not null and filling_fee <> '' and filling_fee <> 0");
+// $New = [];
+// $Renew = [];
+// $Awarding = [];
+
+// $Logs = [];
+// $logs = query("select * from transaction_logs where type in ('New', 'Renew', 'Awarding') order by MTOP_NO ASC, ddate desc");
+
+// foreach($logs as $l):
+// 	$Logs[$l["MTOP_NO"]][$l["ddate"]][$l["type"]] = $l;
+// endforeach;
+// // dump($Logs);
+// foreach($fees as $f):
+// 	// dump($f);
+// 	if(isset($Logs[$f["MTOP_NO"]][$f["date_paid"]]["Renew"])):
+// 		array_push($Renew,$f["ID"]);
+// 	elseif(isset($Logs[$f["MTOP_NO"]][$f["date_paid"]]["Awarding"])):
+// 		array_push($Awarding,$f["ID"]);
+// 	elseif(isset($Logs[$f["MTOP_NO"]][$f["date_paid"]]["New"])):
+// 		array_push($New,$f["ID"]);
+// 	endif;
+// endforeach;
+	
+// 	$New = "'".implode("','",$New)."'";
+// 	$Renew = "'".implode("','",$Renew)."'";
+// 	$Awarding = "'".implode("','",$Awarding)."'";
+	// dump($New);
+
+	// query("update fees set type = 'New' where ID in (".$New.")");
+	// query("update fees set type = 'Renew' where ID in (".$Renew.")");
+	// query("update fees set type = 'Awarding' where ID in (".$Awarding.")");
+	// dump("done");
+// PARA SA NEW,RENEW UG AWARDING
+
+$dropping = query("select * FROM fees WHERE dropping_fee <> '' AND dropping_fee IS NOT NULL AND dropping_fee <> 0 ORDER BY date_paid DESC");
+
+
+
+
+
+
+
     if($_SERVER["REQUEST_METHOD"] === "POST") {
 	
 		

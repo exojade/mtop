@@ -154,7 +154,6 @@ use mikehaertl\pdftk\Pdf;
         endif;
 
         if($_POST["action"] == "or_details"){
-            // dump($_POST);
            $html = "";
             if($_POST["options"] == "etracs"):
                 $cashreceipt = query_etracs("SELECT * FROM cashreceipt WHERE objid = ?", $_POST["id"]);
@@ -224,6 +223,19 @@ use mikehaertl\pdftk\Pdf;
 				]);
 			}
 		}
+
+        else{
+
+            $mtop = query("SELECT *
+            FROM vehicle
+            WHERE expiration_date <= CURDATE()");
+            // dump($mtop);
+            
+
+            render("public/award_system/award_form.php",[
+                "mtop" => $mtop,
+            ]);
+        }
 		
 
 		

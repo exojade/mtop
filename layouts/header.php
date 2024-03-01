@@ -32,10 +32,12 @@
     </ul>
   </nav>
 <script src="AdminLTE_new/plugins/jquery/jquery.min.js"></script>
+<script src="AdminLTE_new/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="AdminLTE_new/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="AdminLTE_new/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="AdminLTE_new/dist/js/adminlte.min.js"></script>
+<!-- <script src="AdminLTE/bower_components/jquery-ui/jquery-ui.min.js"></script> -->
 <!-- AdminLTE for demo purposes -->

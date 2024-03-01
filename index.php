@@ -25,6 +25,14 @@
 					require 'public/users_system/users.php';
 				else if ($request == 'mtop_profile')
 					require 'public/mtop_system/mtop.php';
+				else if ($request == 'award')
+					require 'public/award_system/award.php';
+				else if ($request == 'ajax_etracsOR')
+					require 'public/ajax_system/ajax_etracsOR.php';
+
+					// ajax_etracsOR
+				
+
 				else if ($request == 'logout'){
 				require 'logout.php';
 			}

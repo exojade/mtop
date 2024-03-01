@@ -6,6 +6,30 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98
 {
+    public static $prefixLengthsPsr4 = array (
+        'm' => 
+        array (
+            'mikehaertl\\tmp\\' => 15,
+            'mikehaertl\\shellcommand\\' => 24,
+            'mikehaertl\\pdftk\\' => 17,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'mikehaertl\\tmp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/php-tmpfile/src',
+        ),
+        'mikehaertl\\shellcommand\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/php-shellcommand/src',
+        ),
+        'mikehaertl\\pdftk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/php-pdftk/src',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -13,6 +37,8 @@ class ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98::$classMap;
 
         }, null, ClassLoader::class);

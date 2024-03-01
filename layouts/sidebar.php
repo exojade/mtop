@@ -46,6 +46,43 @@
       </a>
   </li>
 
+
+  <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Transaction
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/charts/chartjs.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/flot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add from Vacant MTOP</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="award" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Award</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="pages/charts/uplot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>uPlot</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+
   <li class="nav-item">
       <a href="users?action=users_list" class="nav-link">
         <i class="nav-icon fas fa-user"></i>
