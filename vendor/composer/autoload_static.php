@@ -13,6 +13,10 @@ class ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98
             'mikehaertl\\shellcommand\\' => 24,
             'mikehaertl\\pdftk\\' => 17,
         ),
+        'P' => 
+        array (
+            'PHPJasper\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -27,6 +31,10 @@ class ComposerStaticInit67eec93e842538f6df4b96e7eefc7b98
         'mikehaertl\\pdftk\\' => 
         array (
             0 => __DIR__ . '/..' . '/mikehaertl/php-pdftk/src',
+        ),
+        'PHPJasper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geekcom/phpjasper/src',
         ),
     );
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FillableFormReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0c4de1a-2b2f-4a3c-89d0-54824849d10d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM your_table]]>
+	</queryString>
+	<field name="field1" class="java.lang.String"/>
+	<field name="field2" class="java.lang.String"/>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="10" width="100" height="20" uuid="ea1532a9-97ae-4f6a-896f-2d9b5b2a6702"/>
+				<textFieldExpression><![CDATA[$F{field1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="250" y="0" width="200" height="45" forecolor="#FFFF00" backcolor="#0000FF" uuid="2641c83a-3c56-4b65-a7c1-63c9fe20cb5c">
+					<property name="net.sf.jasperreports.export.pdf.field.type" value="Text"/>
+					<property name="net.sf.jasperreports.export.pdf.field.text.multiline" value="true"/>
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<propertyExpression name="net.sf.jasperreports.export.pdf.field.value"><![CDATA["This\nis a multi\nline text inside a single line text field."]]></propertyExpression>
+				</reportElement>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

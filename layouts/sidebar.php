@@ -83,6 +83,31 @@
             </ul>
           </li>
 
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-history"></i>
+              <p>
+                Logs
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="logs?action=activity" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Activity</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="logs?action=fees" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Fees</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
   <li class="nav-item">
       <a href="users?action=users_list" class="nav-link">
         <i class="nav-icon fas fa-user"></i>
@@ -92,69 +117,6 @@
       </a>
   </li>
 
-
-  <li class="nav-item">
-      <a href="scholars?action=applicants_list" class="nav-link">
-        <i class="nav-icon fas fa-plus"></i>
-        <p>
-          Applicants
-          <span class="right badge badge-danger"></span>
-        </p>
-      </a>
-  </li>
-
-  <li class="nav-item">
-      <a href="scholars?action=denied_list" class="nav-link">
-        <i class="nav-icon fas fa-times"></i>
-        <p>
-          Denied Applicants
-          <span class="right badge badge-danger"></span>
-        </p>
-      </a>
-  </li>
-
-  <li class="nav-item">
-      <a href="scholars?action=scholars_list" class="nav-link">
-        <i class="nav-icon fas fa-graduation-cap"></i>
-        <p>
-          Scholars
-          <span class="right badge badge-danger"></span>
-        </p>
-      </a>
-  </li>
-
-
-<li class="nav-item">
-      <a href="email?action=list" class="nav-link">
-        <i class="nav-icon fas fa-key"></i>
-        <p>
-          Email
-          <span class="right badge badge-danger"></span>
-        </p>
-        <span class="badge badge-danger right">2</span>
-      </a>
-  </li>
-
-<li class="nav-item">
-      <a href="#" data-toggle="modal" data-target="#changePassword"  class="nav-link">
-        <i class="nav-icon fas fa-key"></i>
-        <p>
-          Change Password
-          <span class="right badge badge-danger"></span>
-          
-        </p>
-      </a>
-  </li>
-               
-<li class="nav-item">
-      <a href="logout" class="nav-link">
-        <i class="nav-icon fas fa-share"></i>
-        <p>
-          Logout
-          <span class="right badge badge-danger"></span>
-        </p>
-      </a>
-  </li>
 
   
        

@@ -92,7 +92,7 @@
             <?php
             // dump(get_defined_vars());
             if(date("Y-m-d") > $mtop["mp_expiration_date"]): ?>
-              <a href="#" class="btn btn-block btn-primary">RENEW MAYORS PERMIT</a>
+              <a href="transaction?action=mayors_permit&mtop=<?php echo($mtop["MTOP_NO"]); ?>" class="btn btn-block btn-primary">RENEW MAYORS PERMIT</a>
             <?php endif; ?>
             <a href="#" class="btn btn-block btn-primary">UNIT SUBSTITUTION</a>
             <a href="#" class="btn btn-block btn-primary">TRANSFER OF OWNERSHIP</a>
@@ -303,7 +303,7 @@
                       <tr>
                         <td><?php echo($logs["ddate"]); ?></td>
                         <td><?php echo($logs["type"]); ?></td>
-                        <td><?php echo($logs["action"]); ?></td>
+                        <td><?php echo("Operator: " . $logs["firstname"] . " " . $logs["lastname"] . "<br>" .$logs["action"]); ?></td>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>
